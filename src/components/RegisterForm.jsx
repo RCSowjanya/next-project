@@ -1,16 +1,26 @@
 "use client";
 import React, { useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { registerAction } from "@/app/serverActions/registerAction";
 const RegisterForm = () => {
-  const [userName, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //function for collect the values
+
   const registerHandler = async (e) => {
-    //on submit page will not refresh----*/
     e.preventDefault();
-    const userRegistrationDetails = { userName, email, password };
-    console.log(userRegistrationDetails);
+
+    const userRegisterDetails = { username, email, password };
+    console.log(userRegisterDetails);
+
+    try {
+      const response = await registerAction(userRegisterDetails);
+      if (response.success) {
+        alert("Registration success");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
