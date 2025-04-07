@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerAction } from "@/app/serverActions/registerAction";
+import Link from "next/link";
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +26,7 @@ const RegisterForm = () => {
 
   return (
     <div className="formContainer">
+      <h1 className="mb-5">Register Form</h1>
       <form onSubmit={registerHandler} className="formSection">
         <h3>Username</h3>
         <input
@@ -48,6 +50,7 @@ const RegisterForm = () => {
         <br />
         <button type="submit">Register</button>
       </form>
+      <Link href="/login">Already Registered? Login</Link>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { loginAction } from "@/app/serverActions/loginAction";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -26,6 +27,7 @@ const UserLogin = () => {
   };
   return (
     <div className="formContainer">
+      <h1 className="mb-3">Login Form</h1>
       <form onSubmit={loginHandler} className="formSection">
         {error && <p style={{ color: "red" }}>{error}</p>}
         <h3>Email</h3>
@@ -44,6 +46,9 @@ const UserLogin = () => {
         <br />
         <button type="submit">Login</button>
       </form>
+      <Link className="pt-4" href="/register">
+        If not Registered ? Register Here
+      </Link>
     </div>
   );
 };

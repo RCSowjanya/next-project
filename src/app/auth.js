@@ -11,7 +11,7 @@ export const {
     credentialProvider({
       name: "credentials",
       async authorize(credentials) {
-        //compare with crentials of login form with usermodel
+        //compare with credentials of login form with user model
         const user = await UserModel.findOne({ email: credentials?.email });
         if (!user) {
           return null;
@@ -24,4 +24,22 @@ export const {
     }),
   ],
   secret: process.env.SECRET_KEY,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.userId = user.id;
+        token.username = user.name;
+        token.role = user.role;
+        token.email = user.email;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.userId = token.userId;
+      session.username = token.username;
+      session.role = token.role;
+      session.email = token.email;
+      return session;
+    },
+  },
 });
