@@ -1,6 +1,7 @@
-//this is used for based on id of user fetch the details of particular user id,id comes from params
+//individual product searching
 import DBConnection from "@/app/utils/config/db";
-import UserModel from "@/app/utils/models/User";
+import ProductModel from "../../../../utils/models/Products";
+
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
@@ -13,14 +14,14 @@ export async function GET(request, { params }) {
   try {
     if (!id) {
       return NextResponse.json(
-        { success: false, message: "no user found" },
+        { success: false, message: "no product found" },
         { status: 404 }
       );
     }
 
-    const user = await UserModel.findById(id);
+    const product = await ProductModel.findById(id);
 
-    return NextResponse.json({ success: true, data: user });
+    return NextResponse.json({ success: true, data: product });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ success: false, message: "ID Is missing" });

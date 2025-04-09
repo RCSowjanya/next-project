@@ -4,6 +4,7 @@ import AdminPage from "./admin/page";
 import { auth } from "./auth";
 import { redirect } from "next/navigation";
 import UserNavigation from "@/components/UserNavigation";
+import ProductCollection from "@/components/ProductCollection";
 
 const Homepage = async () => {
   //for protecting home that means if login details are correct then only home page will be display for that create session
@@ -25,6 +26,7 @@ const Homepage = async () => {
         <div>
           <UserNavigation userName={userName} />
           <h1>welcome to user dashboard</h1>
+          <ProductCollection />
         </div>
       )}
       {session.role === "admin" && <AdminPage />}
