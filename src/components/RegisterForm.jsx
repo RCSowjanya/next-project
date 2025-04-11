@@ -7,7 +7,7 @@ const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const registerHandler = async (e) => {
     e.preventDefault();
 
@@ -18,6 +18,7 @@ const RegisterForm = () => {
       const response = await registerAction(userRegisterDetails);
       if (response.success) {
         alert("Registration success");
+        router.push("/login");
       }
     } catch (error) {
       console.log(error);

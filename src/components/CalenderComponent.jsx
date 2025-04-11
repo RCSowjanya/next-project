@@ -6,6 +6,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 
 const CalenderComponent = ({ onDatesSelect }) => {
   const [showCalender, setShowCalender] = useState(false);
+  const [selectedDates, setSelectedDates] = useState(null);
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -13,8 +14,6 @@ const CalenderComponent = ({ onDatesSelect }) => {
       key: "selection",
     },
   ]);
-
-  const [selectedDates, setSelectedDates] = useState(null);
 
   const handleSelectDates = async () => {
     const startDate = date[0].startDate.toLocaleDateString();
@@ -44,7 +43,7 @@ const CalenderComponent = ({ onDatesSelect }) => {
         className="currentDate"
         onClick={() => setShowCalender(!showCalender)}
       >
-        {!selectedDates && <>{`${currentDate} - ${formattedDate}`}</>}
+        {!selectedDates && <div>{`${currentDate} - ${formattedDate}`}</div>}
         {selectedDates && (
           <div className="" style={{ color: "red" }}>
             {selectedDates}

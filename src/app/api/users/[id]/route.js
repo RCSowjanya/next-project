@@ -18,7 +18,7 @@ export async function GET(request, { params }) {
       );
     }
 
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findById(id).populate("bookings");
 
     return NextResponse.json({ success: true, data: user });
   } catch (error) {

@@ -1,59 +1,50 @@
 "use client";
 
+import { bookingAction } from "@/app/serverActions/bookingAction";
 import CalenderComponent from "@/components/CalenderComponent";
+import UserNavigation from "@/components/UserNavigation";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const DynamicProduct = () => {
   const [record, setRecord] = useState("");
+  const [selectedDates, setSelectedDates] = useState(null);
   const params = useParams();
   const { id } = params;
   console.log("dynamic Client ID:", id);
-  const recordHandler = async () => {
-    try {
-      const response = await fetch(`}`, {
-        method: "GET",
-      });
-      if (!response.ok) {
-        throw new Error("Network Response was not ok");
-      }
-      const newData = await response.json();
-      console.log(newData);
-      setRecord(newData, data);
-    } catch (error) {
-      console.error("Failed to fetch record:", error);
-      //optionally handle error state here
-    }
+  const dynamicProductHandler = async () => {
+    const response = await fetch(
+      `http://localhost:3000/api/admin/product/${id}`
+    );
+    const newData = await response.json();
+    console.log("dynamic data:", newData);
+    setRecord(newData.data);
   };
   useEffect(() => {
-    recordHandler();
-  }, [id]);
+    dynamicProductHandler();
+  }, []);
   const bookingHandler = async () => {
     if (!selectedDates) {
-      alert("please select booking dates");
+      alert("Please select booking dates");
+      return;
     }
-    const userBookingDetails = { record, selectedDates };
+    const bookingDetails = { record, selectedDates };
     try {
-      const response = await bookingAction(userBookingDetails);
-      console.log(userBookingDetails);
-      if (response.success) {
-        alert("Booking Confirmed");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      await bookingAction(record);
+    } catch (error) {}
   };
   const handleDateSelect = (dates) => {
     setSelectedDates(dates);
-    console.log("booking Dates:", dates);
+    console.log("Dates coming from calender", dates);
   };
   return (
     <div>
+      <UserNavigation />
+      <CalenderComponent onDatesSelect={handleDateSelect} />
       <Link href="/">
         <p align="center">Go Back</p>
       </Link>
-      <CalenderComponent onDatesSelect={handleDateSelect} />
 
       {record ? (
         <div className="">
